@@ -7,6 +7,11 @@ import { validateInput } from '../library/validator'
 
 @Resolver()
 export class UserResolver {
+  /**
+   * register user
+   * @param data Users
+   * @returns boolean
+   */
   @Mutation(() => Boolean)
   async registerUser(@Arg('data') data: Users): Promise<boolean> {
     const errors = await validate(data) // Validate the input data using class-validator
@@ -14,6 +19,13 @@ export class UserResolver {
     return registerUserService(data)
   }
 
+  /**
+   * login user
+   * @param email string
+   * @param password string
+   * @param res any 
+   * @returns boolean
+   */
   @Mutation(() => String)
   async loginUser(
     @Arg('email') email: string,
@@ -25,6 +37,13 @@ export class UserResolver {
     return true
   }
 
+  /**
+   * change password
+   * @param oldPassword string
+   * @param newPassword string
+   * @param userId number
+   * @returns boolean
+   */
   @Authorized()
   @Mutation(() => Boolean)
   async changePassword(

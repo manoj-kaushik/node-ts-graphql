@@ -14,6 +14,12 @@ import { UpdateReviews } from '../models/update-review-model'
 
 @Resolver()
 export class ReviewResolver {
+  /**
+   * create review
+   * @param data Reviews
+   * @param userId number
+   * @returns boolean
+   */
   @Authorized()
   @Mutation(() => Boolean)
   async createReview(@Arg('data') data: Reviews, @Ctx() { userId }: MyContext): Promise<boolean> {
@@ -22,17 +28,35 @@ export class ReviewResolver {
     return createReviewService(data, userId)
   }
 
+  /**
+   * delete review
+   * @param id number
+   * @param userId number
+   * @returns boolean
+   */
   @Authorized()
   @Mutation(() => Boolean)
   async deleteReview(@Arg('id', () => Int) id: number, @Ctx() { userId }: MyContext) {
     return deleteReviewService(userId, id)
   }
 
+  /**
+   * initial test
+   * @returns string
+   */
   @Query(() => String)
   async hello() {
     return 'world'
   }
 
+  /**
+   * reviews list by movie id
+   * @param userId number
+   * @param movieId number
+   * @param page number
+   * @param size number
+   * @returns array
+   */
   @Authorized()
   @Query(() => PaginatedReview)
   async reviewsByMovieId(
@@ -44,6 +68,12 @@ export class ReviewResolver {
     return reviewsByMovieIdService(userId, movieId, page, size)
   }
 
+  /**
+   * update review
+   * @param userId number
+   * @param data UpdateReviews
+   * @returns boolean
+   */
   @Authorized()
   @Mutation(() => Boolean)
   async updateReview(@Ctx() { userId }: MyContext, @Arg('data') data: UpdateReviews): Promise<boolean> {

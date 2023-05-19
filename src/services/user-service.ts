@@ -9,6 +9,11 @@ import { ApolloError, UserInputError } from 'apollo-server'
 const prisma = new PrismaClient()
 const saltRounds = 10 // the number of salt rounds to use for bcrypt hashing
 
+/**
+ * register user
+ * @param data Users
+ * @returns boolean
+ */
 export async function registerUserService(data: Users): Promise<boolean> {
   try {
     const { userName, firstName, lastName, email, password } = data
@@ -34,6 +39,12 @@ export async function registerUserService(data: Users): Promise<boolean> {
   }
 }
 
+/**
+ * login user
+ * @param email string
+ * @param password string
+ * @returns string
+ */
 export async function loginUserService(email: string, password: string): Promise<string> {
   try {
     const user = await prisma.users.findFirst({ where: { email } })
@@ -45,6 +56,13 @@ export async function loginUserService(email: string, password: string): Promise
   }
 }
 
+/**
+ * change password
+ * @param oldPassword string
+ * @param newPassword string
+ * @param userId number
+ * @returns boolean
+ */
 export async function changePasswordService(
   oldPassword: string,
   newPassword: string,

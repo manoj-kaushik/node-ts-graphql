@@ -10,6 +10,11 @@ const prisma = new PrismaClient()
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const JWT_SECRET = process.env.JWT_SECRET!
 
+/**
+ * check user authentication
+ * @param context MyContext
+ * @returns boolean
+ */
 const authChecker: AuthChecker<MyContext> = async ({ context }) => {
   const authorization = context.req?.headers['authorization']
   if (!authorization) throw new Error('Not authenticated')

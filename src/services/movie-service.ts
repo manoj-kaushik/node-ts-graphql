@@ -10,6 +10,15 @@ import { MovieOutput } from '../models/movie-output-model'
 
 const prisma = new PrismaClient()
 
+/**
+ * get movies list
+ * @param sortBy string
+ * @param sortOrder string
+ * @param size number
+ * @param page number
+ * @param searchTerm string
+ * @returns array
+ */
 export async function getMoviesService(
   sortBy: string,
   sortOrder: string,
@@ -44,6 +53,11 @@ export async function getMoviesService(
   }
 }
 
+/**
+ * movie detail
+ * @param id number
+ * @returns object
+ */
 export async function movieDetailService(id: number): Promise<MovieOutput> {
   try {
     const movie = await prisma.movies.findFirst({ where: { id } })
@@ -55,6 +69,12 @@ export async function movieDetailService(id: number): Promise<MovieOutput> {
   }
 }
 
+/**
+ * delete movie
+ * @param userId number
+ * @param id number
+ * @returns boolean
+ */
 export async function deleteMovieService(userId: number, id: number): Promise<boolean> {
   try {
     const movie = await prisma.movies.findFirst({ where: { id, userId } })
@@ -69,6 +89,12 @@ export async function deleteMovieService(userId: number, id: number): Promise<bo
   }
 }
 
+/**
+ * create movie
+ * @param data Movies
+ * @param userId number
+ * @returns boolean
+ */
 export async function createMovieService(data: Movies, userId: number): Promise<boolean> {
   try {
     const movie = await prisma.movies.create({
@@ -89,6 +115,12 @@ export async function createMovieService(data: Movies, userId: number): Promise<
   }
 }
 
+/**
+ * update movie
+ * @param data UpdateMovies
+ * @param userId number
+ * @returns boolean
+ */
 export async function updateMovieService(data: UpdateMovies, userId: number): Promise<boolean> {
   try {
     const movie = await prisma.movies.findFirst({ where: { id: data.id, userId } })

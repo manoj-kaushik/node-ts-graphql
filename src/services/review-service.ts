@@ -9,6 +9,12 @@ import { UpdateReviews } from '../models/update-review-model'
 import { ReviewOutput } from '../models/review-output-model'
 const prisma = new PrismaClient()
 
+/**
+ * create review
+ * @param data Reviews
+ * @param userId number
+ * @returns boolean
+ */
 export async function createReviewService(data: Reviews, userId: number): Promise<boolean> {
   try {
     // check movieId is correct
@@ -32,6 +38,12 @@ export async function createReviewService(data: Reviews, userId: number): Promis
   }
 }
 
+/**
+ * delete review
+ * @param userId number
+ * @param id number
+ * @returns boolean
+ */
 export async function deleteReviewService(userId: number, id: number): Promise<boolean> {
   try {
     const review = await prisma.reviews.findFirst({ where: { id, userId } })
@@ -44,6 +56,14 @@ export async function deleteReviewService(userId: number, id: number): Promise<b
   }
 }
 
+/**
+ * reviews by movie id
+ * @param userId number
+ * @param movieId number
+ * @param page number
+ * @param size number
+ * @returns array
+ */
 export async function reviewsByMovieIdService(
   userId: number,
   movieId: number,
@@ -65,6 +85,12 @@ export async function reviewsByMovieIdService(
   }
 }
 
+/**
+ * update review
+ * @param data UpdateReviews
+ * @param userId number
+ * @returns boolean
+ */
 export async function updateReviewService(data: UpdateReviews, userId: number): Promise<boolean> {
   try {
     const review = await prisma.reviews.findFirst({ where: { id: data.id, userId } })

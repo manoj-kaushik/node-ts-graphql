@@ -1,3 +1,8 @@
+/**
+ * validate input error
+ * @param errors array
+ * @returns array
+ */
 export function validateInput(errors: any) {
   if (!errors.length) {
     return null

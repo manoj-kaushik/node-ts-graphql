@@ -17,6 +17,12 @@ import { validateInput } from '../library/validator'
 
 @Resolver()
 export class MovieResolver {
+  /**
+   * create movie
+   * @param data Movies
+   * @param userId number
+   * @returns boolean
+   */
   @Authorized()
   @Mutation(() => Boolean)
   async createMovie(@Arg('data') data: Movies, @Ctx() { userId }: MyContext): Promise<boolean> {
@@ -25,6 +31,12 @@ export class MovieResolver {
     return createMovieService(data, userId)
   }
 
+  /**
+   * update movie
+   * @param userId number
+   * @param data UpdateMovies
+   * @returns boolean
+   */
   @Authorized()
   @Mutation(() => Boolean)
   async updateMovie(@Ctx() { userId }: MyContext, @Arg('data') data: UpdateMovies): Promise<boolean> {
@@ -33,6 +45,15 @@ export class MovieResolver {
     return updateMovieService(data, userId)
   }
 
+  /**
+   * get movie list
+   * @param page number
+   * @param size number
+   * @param sortBy string
+   * @param sortOrder string
+   * @param searchTerm string
+   * @returns array
+   */
   @Authorized()
   @Query(() => PaginatedMovies)
   async getMovies(
@@ -45,12 +66,23 @@ export class MovieResolver {
     return getMoviesService(sortBy, sortOrder, size, page, searchTerm)
   }
 
+  /**
+   * movie detail
+   * @param id number
+   * @returns object
+   */
   @Authorized()
   @Query(() => MovieOutput)
   async movie(@Arg('id', () => Int) id: number): Promise<MovieOutput> {
     return movieDetailService(id)
   }
 
+  /**
+   * delete movie
+   * @param id number
+   * @param userId number
+   * @returns boolean
+   */
   @Authorized()
   @Mutation(() => Boolean)
   async deleteMovie(@Arg('id', () => Int) id: number, @Ctx() { userId }: MyContext): Promise<boolean> {
